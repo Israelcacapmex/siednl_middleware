@@ -121,7 +121,7 @@ def upload():
                                     medios = df.iloc[i, 5]
                                     supuestos = df.iloc[i, 6]
                                     componentes = {
-                                        f'{codigo}': componente,
+                                        'resumen': componente,
                                         'indicador': indicador,
                                         'formula': formula,
                                         'frecuencia': frecuencia,
