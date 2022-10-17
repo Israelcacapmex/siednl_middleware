@@ -172,8 +172,7 @@ def upload():
                                 for j in actividades:
                                     if( c in j['actividad']):
                                         act_counter = act_counter + 1
-                                act.append({c: act_counter})
-                            print(act)
+                                act.append({'componente': c, 'actividades': act_counter})
                             return act
                         
                         matriz = {
@@ -194,5 +193,5 @@ def upload():
                 return("El archivo seleccionado no coincide con el formato esperado.",400)
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=7000, debug=1)
+    app.run(host='0.0.0.0', port=7000)
         
