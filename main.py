@@ -25,7 +25,7 @@ def allowed_name_file(filename):
 
 
 
-@app.route('/upload', methods=['GET', 'POST'])
+@app.route('/upload', methods=['GET', 'POST'])  # type: ignore
 def upload():
 
     if request.method == 'POST':
@@ -45,11 +45,11 @@ def upload():
                             #[FILA, COLUMNA]
                             institucion = df.loc[df['Unnamed: 0'] == 'INSTITUCIÓN:']
                             nombre_del_programa= df.loc[df['Unnamed: 0'] == 'NOMBRE DEL PROGRAMA:']
-                            eje = df.loc[df['Unnamed: 0'] == 'EJE:']
-                            tema = df.loc[df['Unnamed: 0'] == 'TEMA:']
+                            eje = df.loc[df['Unnamed: 0'] == 'EJE DEL PED:']
+                            tema = df.loc[df['Unnamed: 0'] == 'TEMA DEL PED:']
                             objetivo = df.loc[df['Unnamed: 0'] == 'OBJETIVO:']
                             estrategia = df.loc[df['Unnamed: 0'] == 'ESTRATEGIA:']
-                            lineas_de_accion = df.loc[df['Unnamed: 0'] == 'LÍNEAS DE ACCIÓN']
+                            lineas_de_accion = df.loc[df['Unnamed: 0'] == 'LÍNEAS DE ACCIÓN PED:']
                             beneficiario = df.loc[df['Unnamed: 0'] == 'BENEFICIARIO (PO/AE):']
                             clasificacion_programatica= df.loc[df['Unnamed: 5'] == 'CLASIFICACIÓN PROGRAMÁTICA:']
                             cp_conac_modalidad= df.loc[df['Unnamed: 5'] == 'CP CONAC "Modalidad":']
@@ -136,7 +136,7 @@ def upload():
 
                         
                         def Actividades(df):
-                            array_indices_actividades= df.loc[df['Unnamed: 0'] == 'ACTIVIDADES (Procesos)'].index.tolist()
+                            array_indices_actividades= df.loc[df['Unnamed: 0'] == 'ACTIVIDADES (PROCESOS)'].index.tolist()
                             actividades_array=[]
                             for i in array_indices_actividades:
                                         codigo = df.iloc[i,1].split('. ')[0]
@@ -193,5 +193,5 @@ def upload():
                 return("El archivo seleccionado no coincide con el formato esperado.",400)
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=7000)
+    app.run(host='0.0.0.0', port=7000, debug= True)
         
