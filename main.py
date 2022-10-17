@@ -121,6 +121,7 @@ def upload():
                                     medios = df.iloc[i, 5]
                                     supuestos = df.iloc[i, 6]
                                     componentes = {
+                                        'componentes': codigo,
                                         'resumen': componente,
                                         'indicador': indicador,
                                         'formula': formula,
@@ -130,6 +131,9 @@ def upload():
                                     }
                                     componentes_array.append(componentes)
                             return componentes_array
+
+                        
+
                         
                         def Actividades(df):
                             array_indices_actividades= df.loc[df['Unnamed: 0'] == 'ACTIVIDADES (Procesos)'].index.tolist()
@@ -143,7 +147,8 @@ def upload():
                                         medios=df.iloc[i,5]
                                         supuestos=df.iloc[i,6]
                                         actividades ={
-                                            f'{codigo}': actividad,
+                                            'actividad': codigo,
+                                            'resumen': actividad,
                                             'indicador':indicador,
                                             'formula':formula,
                                             'frecuencia':frecuencia,
@@ -154,6 +159,22 @@ def upload():
                                         actividades_array.append(actividades)
                                         
                             return actividades_array
+
+                        def CaluloActComp(df):
+                            componentes = Componentes(df)
+                            actividades = Actividades(df)
+                            comp = []
+                            act = []
+                            for i in componentes:
+                                act_counter = 0
+                                c = i['componentes']
+                                comp.append(c)
+                                for j in actividades:
+                                    if( c in j['actividad']):
+                                        act_counter = act_counter + 1
+                                act.append({c: act_counter})
+                            print(act)
+                            return act
                         
                         matriz = {
                             'encabezado':Encabezado(df),
@@ -161,8 +182,9 @@ def upload():
                             'propositos':Propositos(df),
                             'actividades': Actividades(df),
                             'componentes': Componentes(df),
-                            
+                            'componenteActividad': CaluloActComp(df)
                         }
+
                         return  matriz
                 else:
                     print("Se esperaba una Matriz de Indicadores Prespuestarios.")
@@ -172,5 +194,5 @@ def upload():
                 return("El archivo seleccionado no coincide con el formato esperado.",400)
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=7000)
+    app.run(host='0.0.0.0', port=7000, debug=1)
         
