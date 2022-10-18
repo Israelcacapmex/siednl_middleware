@@ -165,14 +165,17 @@ def upload():
                             actividades = Actividades(df)
                             comp = []
                             act = []
+                            act_count = []
                             for i in componentes:
                                 act_counter = 0
+                                act_count = []
                                 c = i['componentes']
                                 comp.append(c)
                                 for j in actividades:
                                     if( c in j['actividad']):
                                         act_counter = act_counter + 1
-                                act.append({'componente': c, 'actividades': act_counter})
+                                        act_count.append(act_counter)
+                                act.append({'componente': c, 'actividades': act_count})
                             return act
                         
                         matriz = {
