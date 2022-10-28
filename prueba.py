@@ -38,7 +38,6 @@ def upload():
             return("No se ha seleccionado ningun Archivo.",400)
         else:
             file = request.files['file']
-            
             if file not in request.files and allowed_file(file.filename):
                 if file not in request.files and allowed_name_file(file.filename):
                         # print(allowed_name_file(file.filename))
@@ -67,7 +66,6 @@ def upload():
                                 if i == j:
                                     
                                     contenido1 = df2['Unnamed: 1'][i]
-                                    print(df2['Unnamed: 1'][i])
                                     contenido.append(contenido1)
 
                         NP = 1
@@ -109,25 +107,7 @@ def upload():
                                     #print(df2['Unnamed: 0'][i+contadordf] )
                                   #  contadoractividades =contadoractividades+1
 
-                            if 'C2' in df2['Unnamed: 0'][i]:
-                                print('entre a C2',i)
-                                #print('entre a C2',i)
-                                #print('soy el i del if de c2',i)
-                                
-
-                            if 'C3' in df2['Unnamed: 0'][i]:
-                                print('entre a C2',i)
-                             
-                            
-                            if 'C4' in df2['Unnamed: 0'][i]:
-                                print('entre a C4',i)
-                                
-                            
-                            if 'C5' in df2['Unnamed: 0'][i]:
-                                print('entre a C5',i)
-                                
-                            if 'C6' in df2['Unnamed: 0'][i]:
-                                print('entre a C5',i)
+                           
                                 
                             
                         for i in range(df2['Unnamed: 1'].size):
@@ -156,7 +136,6 @@ def upload():
                                         df['Unnamed: 1'][i] = df['Unnamed: 1'][i]+str(contadorw )
                                         print(df['Unnamed: 1'][i])
 
-                        print(df2['Unnamed: 0'])
                         #print(contenidoActividades)
 
                         def Encabezado(df):
@@ -259,8 +238,8 @@ def upload():
                                          componente = "C"+str(x)
 
                                     componentes = {
-                                        'componentes': "C" + str(i +1)+ ' ' + codigo,
-                                        'resumen': "C" + str(i +1) + ' ' + componente,
+                                        'componentes': "C" + str(i +1),
+                                        'resumen': "C" + str(i +1) + '. ' + componente,
                                         'indicador': indicador,
                                         'formula': formula,
                                         'frecuencia': frecuencia,
@@ -283,42 +262,45 @@ def upload():
                             #array_indices_actividades= df.loc[df['Unnamed: 0'] == 'ACTIVIDADES (PROCESOS)'].index.tolist()
                             array_indices_actividades= df.loc[df['Unnamed: 0'].str.contains('ACTIVIDADES PROCESOS|ACTIVIDADES|PROCESOS|ACTI', case=False, regex=True, na =False) ].index.tolist()
                             actividades_array=[]
-                            for i in range(len(array_indices_actividades)):
-                                        codigo = df.iloc[array_indices_actividades[i],1].split('. ')[0]
-                                        actividad=df.iloc[array_indices_actividades[i],1]
-                                        indicador=df.iloc[array_indices_actividades[i],2]
-                                        formula=df.iloc[array_indices_actividades[i],3]
-                                        frecuencia=df.iloc[array_indices_actividades[i],4]
-                                        medios=df.iloc[array_indices_actividades[i],5]
-                                        supuestos=df.iloc[array_indices_actividades[i],6]
-                                        #print('resumen',actividad)
-                                        #print('actividad',codigo)
+                            componentes = Componentes(df)
+                            primerActividad = array_indices_actividades[0]                    
 
-                                        #if 'C' in  actividad:
-                                          #   codigo = actividad + str(i)
-                                             #print('resumen',actividad)
-                                             #print('actividad',codigo)
-                                        #if 
-                                        #else:
-                                         #   codigo = 'AC' + str(i)
-                                            #actividad ='AC' + str(i)
+                            for item in range(len(componentes)):
+
+                                for i in range(len(array_indices_actividades)):
+                                            codigo = df.iloc[array_indices_actividades[i],1].split('. ')[0]
+                                            actividad=df.iloc[array_indices_actividades[i],1]
+                                            indicador=df.iloc[array_indices_actividades[i],2]
+                                            formula=df.iloc[array_indices_actividades[i],3]
+                                            frecuencia=df.iloc[array_indices_actividades[i],4]
+                                            medios=df.iloc[array_indices_actividades[i],5]
+                                            supuestos=df.iloc[array_indices_actividades[i],6]
                                             #print('resumen',actividad)
                                             #print('actividad',codigo)
 
-                                        actividades ={
-                                            'actividad': "A" + str(i +1),
-                                            'resumen': actividad,
-                                            'indicador':indicador,
-                                            'formula':formula,
-                                            'frecuencia':frecuencia,
-                                            'medios':medios,
-                                            'supuestos':supuestos
-                                        }
-                                        print()
-                                        actividades_array.append(actividades)
+                                            #if 'C' in  actividad:
+                                            #   codigo = actividad + str(i)
+                                                #print('resumen',actividad)
+                                                #print('actividad',codigo)
+                                            #if 
+                                            #else:
+                                            #   codigo = 'AC' + str(i)
+                                                #actividad ='AC' + str(i)
+                                                #print('resumen',actividad)
+                                                #print('actividad',codigo)
+
+                                            actividades ={
+                                                'actividad': "A" + str(i +1) + componentes[item]['componentes'],
+                                                'resumen': actividad,
+                                                'indicador':indicador,
+                                                'formula':formula,
+                                                'frecuencia':frecuencia,
+                                                'medios':medios,
+                                                'supuestos':supuestos
+                                            }
+                                            actividades_array.append(actividades)
                                         #print(codigo)
                             #print(array_indices_actividades)
-                            print()
                             return actividades_array
 
 
