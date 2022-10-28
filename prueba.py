@@ -1,6 +1,7 @@
 
 
 from cmath import nan
+from tkinter import W
 from flask import Flask, request, jsonify, render_template
 import pandas as pd
 import json
@@ -46,9 +47,6 @@ def upload():
                         df2 = df.copy()
                         df2 = df2.fillna(method='ffill', axis=0)
                         df2= df2.fillna(0)
-                        df_index = df.iloc[:,0].tolist()
-                        df_index2 = df.iloc[:,1].tolist()
-                        
                         df['Unnamed: 1'] = df['Unnamed: 1'].fillna(0).astype(str)
                         df['Unnamed: 0'] = df['Unnamed: 0'].fillna(0).astype(str)
                         df2 = df.copy()
@@ -59,39 +57,107 @@ def upload():
                         #print(textocomponente)
                         #print(textoactividades)
                         contenido = []
-
-                        #indices= df.loc[df['Unnamed: 0'].str.contains('ACTIVIDADES PROCESOS|ACTIVIDADES|PROCESOS|ACTI', case=False, regex=True, na =False) ].index.tolist()
-                        #for i in textocomponente:
-                            #x = i
-                            #print(x)
-                        #print(x)
-                            #if textocomponente[i] == df2['Unnamed: 1'][i]:
-                             #   componentedf[i] = df2['Unnamed: 1'][i]
-                              #  print(df2['Unnamed: 1'][i])
-                            #print(componentedf)
-            
-                        #for i in range(df2['Unnamed: 0'].size):
-                         #   if 'ACTIVIDADES' in df2['Unnamed: 0'][i]:
-                          #      print(df2['Unnamed: 0'][i],i)
-                            #print('hola',i)
-                        #print(df2['Unnamed: 0'])
-                        #print(df2['Unnamed: 1'])
+                        contenidoActividades = []
+                        textoactividades2 = textoactividades
+                        
 
                         for i in range(df2['Unnamed: 1'].size):
-                            for j in textocomponente:
+                            for j in textoactividades:
+                           
+                                if i == j:
+                                    
+                                    contenido1 = df2['Unnamed: 1'][i]
+                                    print(df2['Unnamed: 1'][i])
+                                    contenido.append(contenido1)
+
+                        NP = 1
+                        #print(contenido)
+                        for i in range(df2['Unnamed: 0'].size):
+                            
+                            for j in contenido:
+                                if  j in df2['Unnamed: 0'][i]:
+                                    df2['Unnamed: 0'][i] = 'C'+str(j)
+                                    #print(df2['Unnamed: 0'][i])
+                                    #print(j,contenido)
+
+
+                        for i in range(df2['Unnamed: 0'].size):
+                            contadordf = 1
+                            contadoractividades = 1
+                            aux = []
+                            subcact = []
+                            #print(df2['Unnamed: 0'])
+                            if 'C1' in df2['Unnamed: 0'][i]:
+                                contadordf = 1
+                                contadoractividades = 1
+                                #print('entre a C1',i)
+                                #print('soy el i del if de c1',i)
+
+                                w = 1
+                                for j in textoactividades:
+                                    if i+w in textoactividades:
+                                        aux.append(j)
+                                        subcact = aux
+                                        #print(subcact)
+                                        w = w+1
+                                contadorp = 0
+
+
+                                #for  textoactividades2  in range(len(subcact)):
+                                    #print('ENTRE')
+                                 #   df2['Unnamed: 0'][i+contadordf] = 'C1' +'A'
+                                    #print(df2['Unnamed: 0'][i+contadordf] )
+                                  #  contadoractividades =contadoractividades+1
+
+                            if 'C2' in df2['Unnamed: 0'][i]:
+                                print('entre a C2',i)
+                                #print('entre a C2',i)
+                                #print('soy el i del if de c2',i)
+                                
+
+                            if 'C3' in df2['Unnamed: 0'][i]:
+                                print('entre a C2',i)
+                             
+                            
+                            if 'C4' in df2['Unnamed: 0'][i]:
+                                print('entre a C4',i)
+                                
+                            
+                            if 'C5' in df2['Unnamed: 0'][i]:
+                                print('entre a C5',i)
+                                
+                            if 'C6' in df2['Unnamed: 0'][i]:
+                                print('entre a C5',i)
+                                
+                            
+                        for i in range(df2['Unnamed: 1'].size):
+                            contadorp = 0
+                            for j in textoactividades:
+                                contadorp = contadorp+1 
                             #print(i)
                                 #print('indice',i,'Valor que ocupo tomar del indice',j)
-                                if i == j :
-                                    contenido1 = df2['Unnamed: 1'][i]
-                                    contenido.append(contenido1)
+                                if i == j:
+                                    #print('entre')
+                                    df['Unnamed: 1'][i] =df2['Unnamed: 0'][i] + str(contadorp)+ ' ' + df['Unnamed: 1'][i]
+                                    #contadorp = contadorp+1 
+                                    #print(contadorp) 
                         
+                        
+
                         for i in range(df2['Unnamed: 1'].size):
-                         #   if  str(contenido) in df2['Unnamed: 1'][i] :
-                                print('indice',i,df2['Unnamed: 1'][i])
+                            contadorw = 1
+                            for j in textoactividades: 
+                                #contadorw = 1
+                                if i == j:
+                                    #print('entre al primer if',i,j)
+                                    #print(df['Unnamed: 1'][i],df2['Unnamed: 0'][i])
+                                    if df['Unnamed: 1'][i] in df2['Unnamed: 0'][i]:
+                                     #   print('entre al segundo if')
+                                        df['Unnamed: 1'][i] = df['Unnamed: 1'][i]+str(contadorw )
+                                        print(df['Unnamed: 1'][i])
 
-
-                        #print(contenido)
-
+                        print(df2['Unnamed: 0'])
+                        #print(contenidoActividades)
 
                         def Encabezado(df):
                             
@@ -313,7 +379,7 @@ def upload():
                            'propositos':Propositos(df),
                             'actividades': Actividades(df),
                             'componentes': Componentes(df),
-                           #'componenteActividad': CaluloActComp(df)
+                           'componenteActividad': CaluloActComp(df)
                         }
 
                         return  matriz
