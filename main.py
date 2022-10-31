@@ -209,10 +209,10 @@ def upload():
                                 if "." in df.iloc[array_indices_actividades[i], 1]:
                                     res = df.iloc[array_indices_actividades[i], 1].split('.')[1]
                                 else:
-                                    res = df.iloc[array_indices_actividades[i], 1]
+                                    res = " "+df.iloc[array_indices_actividades[i], 1]
                                 
                                
-                                resumen= actividad +". " + res
+                                resumen= actividad +"." + res
                                 indicador=df.iloc[array_indices_actividades[i],2]
                                 formula=df.iloc[array_indices_actividades[i],3]
                                 frecuencia=df.iloc[array_indices_actividades[i],4]
