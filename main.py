@@ -1,11 +1,13 @@
 
 
-from flask import Flask, request
+from json import JSONEncoder
+from flask import Flask, jsonify, request
 import pandas as pd
 from flask_cors import CORS
-import math
+import json
 app = Flask(__name__)
 CORS(app)
+app.config['JSON_AS_ASCII'] = False
 
 ALLOWED_EXTENSIONS = set(['xlsx'])
 ALLOWED_NAME_MIR =set(['mir'])
@@ -34,6 +36,13 @@ def upload():
                         df = pd.read_excel(file)
                         df[['Unnamed: 0']] = df[['Unnamed: 0']].fillna(method='ffill', axis=0)
                         df[['Unnamed: 1']] = df[['Unnamed: 1']].fillna(value=' ', axis=0)
+                        df[['Unnamed: 2']] = df[['Unnamed: 2']].fillna(value=' ', axis=0)
+                        df[['Unnamed: 3']] = df[['Unnamed: 3']].fillna(value=' ', axis=0)
+                        df[['Unnamed: 4']] = df[['Unnamed: 4']].fillna(value=' ', axis=0)
+                        df[['Unnamed: 5']] = df[['Unnamed: 5']].fillna(value=' ', axis=0)
+                        df[['Unnamed: 6']] = df[['Unnamed: 6']].fillna(value=' ', axis=0)
+
+
 
                         # df2 = df.copy()
                         # df2 = df2.fillna(method='ffill', axis=0)
@@ -165,9 +174,16 @@ def upload():
                                     frecuencia = df.iloc[array_indices_componentes[i], 4]
                                     medios = df.iloc[array_indices_componentes[i], 5]
                                     supuestos = df.iloc[array_indices_componentes[i], 6]
+
                                     
-                                    if "C" in componente:
-                                         componente = df.iloc[array_indices_componentes[i], 1].split('. ')[0]
+                                    if "." in componente:
+                                         componente = df.iloc[array_indices_componentes[i], 1].split('. ')[1]
+                                    else: 
+                                        componente = df.iloc[array_indices_componentes[i], 1]
+                                        
+                                    print(componente)
+
+
 
                                     componentes = {
                                         'componentes': "C" + str(i +1),
@@ -273,10 +289,10 @@ def upload():
                            'propositos':Propositos(df),
                             'actividades': Actividades(df),
                             'componentes': Componentes(df),
-                          'componenteActividad': CaluloActComp(df)
+                          'componenteActividad': CaluloActComp(df),
                         }
 
-                        return  matriz
+                        return  jsonify(matriz)
                 else:
                     print("Se esperaba una Matriz de Indicadores Prespuestarios.")
                     return("Se esperaba una Matriz de Indicadores Prespuestarios.",400)
