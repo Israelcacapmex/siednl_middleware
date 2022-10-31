@@ -27,7 +27,6 @@ def allowed_name_file(filename):
 def upload():
     if request.method == 'POST':
         if not 'file' in request.files:
-            print("No se ha seleccionado ningun Archivo.")
             return("No se ha seleccionado ningun Archivo.",400)
         else:
             file = request.files['file']
@@ -180,11 +179,7 @@ def upload():
                                          componente = df.iloc[array_indices_componentes[i], 1].split('. ')[1]
                                     else: 
                                         componente = df.iloc[array_indices_componentes[i], 1]
-                                        
-                                    print(componente)
-
-
-
+                                 
                                     componentes = {
                                         'componentes': "C" + str(i +1),
                                         'resumen': "C" + str(i +1) + '. ' + componente,
@@ -294,10 +289,8 @@ def upload():
 
                         return  jsonify(matriz)
                 else:
-                    print("Se esperaba una Matriz de Indicadores Prespuestarios.")
                     return("Se esperaba una Matriz de Indicadores Prespuestarios.",400)
             else:
-                print("El archivo seleccionado no coincide con el formato esperado.")
                 return("El archivo seleccionado no coincide con el formato esperado.",400)
 
             
