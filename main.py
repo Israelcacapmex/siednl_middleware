@@ -41,56 +41,6 @@ def upload():
                         df[['Unnamed: 5']] = df[['Unnamed: 5']].fillna(value=' ', axis=0)
                         df[['Unnamed: 6']] = df[['Unnamed: 6']].fillna(value=' ', axis=0)
 
-
-
-                        # df2 = df.copy()
-                        # df2 = df2.fillna(method='ffill', axis=0)
-                        # df2= df2.fillna(0)
-                        # df['Unnamed: 1'] = df['Unnamed: 1'].fillna(0).astype(str)
-                        # df['Unnamed: 0'] = df['Unnamed: 0'].fillna(0).astype(str)
-                        # df2 = df.copy()
-                        # df2['Unnamed: 0'] = df2['Unnamed: 0'].fillna(0).astype(str)
-                        # df2['Unnamed: 1'] = df2['Unnamed: 1'].fillna(0).astype(str)
-                        # textoactividades= df2.loc[df2['Unnamed: 0'].str.contains('ACTIVIDADES PROCESOS|ACTIVIDADES|PROCESOS|ACTI', case=False, regex=True, na =False) ].index.tolist()
-                        # contenido = []
-
-                        # for i in range(df2['Unnamed: 1'].size):
-                        #     for j in textoactividades:
-                        #         if i == j:
-                        #             contenido1 = df2['Unnamed: 1'][i]
-                        #             contenido.append(contenido1)
-                        # for i in range(df2['Unnamed: 0'].size):
-                        #     for j in contenido:
-                        #         if  j in df2['Unnamed: 0'][i]:
-                        #             df2['Unnamed: 0'][i] = 'C'+str(j)
-
-                        # for i in range(df2['Unnamed: 0'].size):
-                           
-                        #     aux = []
-                        #     if 'C1' in df2['Unnamed: 0'][i]:
-                        #         w = 1
-                        #         for j in textoactividades:
-                        #             if i+w in textoactividades:
-                        #                 aux.append(j)
-                        #                 w = w + 1
-                        #         contadorp = 0
-                           
-                                
-                            
-                        # for i in range(df2['Unnamed: 1'].size):
-                        #     contadorp = 0
-                        #     for j in textoactividades:
-                        #         contadorp = contadorp+1 
-                        #         if i == j:
-                        #             df['Unnamed: 1'][i] =df2['Unnamed: 0'][i] + str(contadorp)+ ' ' + df['Unnamed: 1'][i]
-
-                        # for i in range(df2['Unnamed: 1'].size):
-                        #     contadorw = 1
-                        #     for j in textoactividades: 
-                        #         if i == j:
-                        #             if df['Unnamed: 1'][i] in df2['Unnamed: 0'][i]:
-                        #                 df['Unnamed: 1'][i] = df['Unnamed: 1'][i]+str(contadorw )
-
                         def Encabezado(df):
                             
                             institucion = df.loc[df['Unnamed: 0'].str.contains('INST|INSTITUCIÓN|INSTITUCION', case=False, regex=True, na =False)]
@@ -163,8 +113,6 @@ def upload():
                             array_indices_componentes =df.loc[df['Unnamed: 0'].str.contains('COMPONENTE|COMPO|NENTES', case=False, regex=True, na =False)].index.tolist()
                             componentes_array=[]
                             x = 1
-                           # print(df.loc[df['Unnamed: 0'].str.contains('COMPONENTE|COMPO|NENTES', case=False, regex=True, na =False)])
-
                             for i in range(len(array_indices_componentes)):
                                                                    
                                     componente = df.iloc[array_indices_componentes[i], 1]
@@ -193,8 +141,6 @@ def upload():
 
                                     x = x+1
                             return componentes_array
-
-                        
 
                         
                         def Actividades(df):
@@ -242,9 +188,6 @@ def upload():
                                 actividades_array.append(actividades)
                             return actividades_array
 
-
-                        
-
                         def CaluloActComp(df):
                             componentes = Componentes(df)
                             actividades = Actividades(df)
@@ -281,12 +224,11 @@ def upload():
                         matriz = {
                             'encabezado':Encabezado(df),
                             'fin':Fin(df),
-                           'propositos':Propositos(df),
+                            'propositos':Propositos(df),
                             'actividades': Actividades(df),
                             'componentes': Componentes(df),
-                          'componenteActividad': CaluloActComp(df),
+                            'componenteActividad': CaluloActComp(df),
                         }
-
                         return  jsonify(matriz)
                 else:
                     return("Se esperaba una Matriz de Indicadores Prespuestarios.",400)
