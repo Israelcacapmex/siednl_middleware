@@ -33,6 +33,7 @@ def upload():
             if file not in request.files and allowed_file(file.filename):
                 if file not in request.files and allowed_name_file(file.filename):
                         df = pd.read_excel(file)
+                        
                         df[['Unnamed: 0']] = df[['Unnamed: 0']].fillna(method='ffill', axis=0)
                         df[['Unnamed: 1']] = df[['Unnamed: 1']].fillna(value=' ', axis=0)
                         df[['Unnamed: 2']] = df[['Unnamed: 2']].fillna(value=' ', axis=0)
@@ -185,6 +186,7 @@ def upload():
                                     'medios':medios,
                                     'supuestos':supuestos
                                 }
+                                print(actividades)
                                 actividades_array.append(actividades)
                             return actividades_array
 
