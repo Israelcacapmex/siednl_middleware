@@ -24,6 +24,7 @@ def allowed_name_file(filename):
    
 @app.route('/upload', methods=['GET', 'POST'])  # type: ignore
 def upload():
+    #hola soy yo
     if request.method == 'POST':
         if not 'file' in request.files:
             return("No se ha seleccionado ningun Archivo.",400)
