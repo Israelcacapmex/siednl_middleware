@@ -44,15 +44,15 @@ def upload():
 
                         def Encabezado(df):
                             
-                            institucion = df.loc[df['Unnamed: 0'].str.contains('INST|INSTITUCIÓN|INSTITUCION', case=False, regex=True, na =False)]
+                            institucion = df.loc[df['Unnamed: 0'].str.contains('INST|INSTITUCION|INSTITUCION', case=False, regex=True, na =False)]
                             nombre_del_programa= df.loc[df['Unnamed: 0'].str.contains('NOMBRE DEL PROGRAMA|NOMBRE|NOM|PROG', case=False, regex=True, na =False)]
                             eje = df.loc[df['Unnamed: 0'].str.contains('EJE DEL PED|EJE', case=False, regex=True, na =False)]
                             tema = df.loc[df['Unnamed: 0'].str.contains('TEMA DEL PED|TEMA', case=False, regex=True, na =False)]
                             objetivo = df.loc[df['Unnamed: 0'].str.contains('OBJETIVO|OBJ|JETI|IVO', case=False, regex=True, na =False)]
                             estrategia = df.loc[df['Unnamed: 0'].str.contains('ESTRATEGIA|ESTRA|TEGIA', case=False, regex=True, na =False)]
-                            lineas_de_accion = df.loc[df['Unnamed: 0'].str.contains('LÍNEAS DE ACCIÓN PED|LINEAS|LÍNEAS|ACCIÓN|ACCION', case=False, regex=True, na =False)]
+                            lineas_de_accion = df.loc[df['Unnamed: 0'].str.contains('LINEAS DE ACCIÓN PED|LINEAS|LINEAS|ACCION|ACCION|NEAS DE', case=False, regex=True, na =False)]
                             beneficiario = df.loc[df['Unnamed: 0'].str.contains('BENEFICIARIO|BENE|FICI|ARIO', case=False, regex=True, na =False)]
-                            clasificacion_programatica= df.loc[df['Unnamed: 5'].str.contains('CLASIFICACIÓN PROGRAMÁTICA|CLASIFICACIÓN|PROGRAMÁTICA|CLAS|PROGRA', case=False, regex=True, na =False)]
+                            clasificacion_programatica= df.loc[df['Unnamed: 5'].str.contains('CLASIFICACION PROGRAMÁTICA|CLASIFICACION|PROGRAMATICA|CLAS|PROGRA|CLASIFICACI PROGRAM', case=False, regex=True, na =False)]
                             cp_conac_modalidad= df.loc[df['Unnamed: 5'].str.contains('CP CONAC |CP|CONAC|"Modalidad"|CP CONAC', case=False, regex=True, na =False)]
                             encabezado_array=[]
                             encabezado = {
