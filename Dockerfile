@@ -1,3 +1,4 @@
+
 FROM python:3.8.10-slim-buster
 WORKDIR /app
 # We copy just the requirements.txt first to leverage Docker cache
